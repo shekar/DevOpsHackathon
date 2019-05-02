@@ -1,0 +1,34 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "My first app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "create-db": "cd dynamodb && node createSuperHeroTable.js && cd ..",
+    "delete-db": "cd dynamodb && node deleteSuperHeroTable.js && cd ..",
+    "load-data": "cd dynamodb && node loadSuperHeroData.js && cd ..",
+    "read-data": "cd dynamodb && node readSuperHeroDataTest.js && cd ..",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshayupadhyay93/myfirstapp.git"
+  },
+  "keywords": [
+    "MyfirstApp"
+  ],
+  "author": "akshay upadhyay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akshayupadhyay93/myfirstapp/issues"
+  },
+  "homepage": "https://github.com/akshayupadhyay93/myfirstapp#readme",
+  "dependencies": {
+    "aws-sdk": "^2.443.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  }
+}
