@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Iron Man",
+    "biography": "bio",
+    "powers": [ "Fly", "Super Strength" ]
+  },
+  {
+    "id": 2,
+    "name": "Thor",
+    "biography": "bio",
+    "powers": [ "Fly", "Super Strength", "Hammer" ]
+  }
+]
