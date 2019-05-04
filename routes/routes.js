@@ -8,7 +8,7 @@ var appRouter = function (app) {
 
     var docClient = new AWS.DynamoDB.DocumentClient();
 
-    app.get("/", function (req, res) {
+    app.get("/Heroes", function (req, res) {
         var params = {
             TableName: tableName,
             ProjectionExpression: "#id, #name,#biography,#powers",
