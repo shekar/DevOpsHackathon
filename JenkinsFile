@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-               powerShell('npm install')
+               powershell('npm install')
             }
         }
     }
