@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-               bat 'start cmd.exe /c npm install'
+               bat 'start C:\windows\system32\cmd.exe /c npm install'
             }
         }
     }
