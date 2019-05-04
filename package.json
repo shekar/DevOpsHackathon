@@ -1,8 +1,8 @@
 {
-  "name": "SuperPowers",
+  "name": "superheroes",
   "version": "1.0.0",
-  "description": "My first app",
-  "main": "server.js",
+  "description": "Super Heroes Application",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon ./bin/www",
     "create-db": "cd dynamodb && node createSuperHeroTable.js && cd ..",
@@ -10,7 +10,28 @@
     "load-data": "cd dynamodb && node loadSuperHeroData.js && cd ..",
     "read-data": "cd dynamodb && node readSuperHeroDataTest.js && cd ..",
     "test": "mocha  tests/*.js",
-    "dev": "nodemon --exec babel-node --presets babel-preset-env"
+    "start-react": "react-scripts start",
+    "build-react": "react-scripts build",
+    "test-react": "react-scripts test",
+    "eject-react": "react-scripts eject",
+    "client": "npm run start-react",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "repository": {
     "type": "git",
@@ -27,19 +48,27 @@
   "homepage": "https://github.com/akshayupadhyay93/myfirstapp#readme",
   "dependencies": {
     "aws-sdk": "^2.443.0",
+    "axios": "^0.18.0",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
     "cookie-parser": "^1.4.4",
-    "express": "^4.16.4",
+    "express": "6.9.0",
     "morgan": "^1.9.1",
-    "touch": "^3.1.0"
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.0"
   },
   "devDependencies": {
+    "concurrently": "^4.0.1",
     "babel-cli": "7.0.0-beta.3",
-    "babel-preset-env": "7.0.0-beta.3",
+    "babel-preset-2017": "0.0.0",
+    "rimraf": "2.6.3",
     "chai": "4.2.0",
     "chai-http": "4.3.0",
     "mocha": "6.1.4",
     "nodemon": "1.19.0",
     "request": "^2.88.0"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
