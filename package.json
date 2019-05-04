@@ -1,15 +1,16 @@
 {
-  "name": "myapp",
+  "name": "SuperPowers",
   "version": "1.0.0",
   "description": "My first app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon ./bin/www",
     "create-db": "cd dynamodb && node createSuperHeroTable.js && cd ..",
     "delete-db": "cd dynamodb && node deleteSuperHeroTable.js && cd ..",
     "load-data": "cd dynamodb && node loadSuperHeroData.js && cd ..",
     "read-data": "cd dynamodb && node readSuperHeroDataTest.js && cd ..",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require babel-register tests/*.js --exit",
+    "dev": "nodemon --exec babel-node --presets babel-preset-env"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,16 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "touch": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "7.0.0-beta.3",
+    "babel-preset-env": "7.0.0-beta.3",
+    "chai": "4.2.0",
+    "chai-http": "4.3.0",
+    "mocha": "6.1.4",
+    "nodemon": "1.19.0",
+    "request": "^2.88.0"
   }
 }

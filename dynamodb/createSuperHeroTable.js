@@ -10,7 +10,7 @@ var params = {
         { AttributeName: 'id', KeyType: 'HASH'},
 ],
     AttributeDefinitions: [
-        { AttributeName: 'id', AttributeType: 'N' },
+        { AttributeName: 'id', AttributeType: 'N' }, 
 ],
     ProvisionedThroughput: {
         ReadCapacityUnits: 5,
