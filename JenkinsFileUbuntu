@@ -5,6 +5,9 @@ pipeline {
             args '-p 3000:3000 -v /.cache/ -v /.bower/ -v /.config/configstore/'
         }
     }
+    environment{
+        HOME = '.'
+    }
     stages {
         stage('Build') { 
             steps {
