@@ -1,5 +1,5 @@
 pipeline {
-    agent {
+    agent any {
         docker {
             image 'node:6-alpine' 
             args '-p 3000:3000' 
@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                bat 'npm install' 
+               powershell label: '', script: 'npm install'
             }
         }
     }
