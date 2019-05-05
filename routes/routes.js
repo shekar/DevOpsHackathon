@@ -1,3 +1,4 @@
+const readTable=require('./readTable')
 var appRouter = function (app) {
    var tableName = "SuperHeroesDb";
    var AWS = require("aws-sdk");
@@ -21,10 +22,8 @@ var appRouter = function (app) {
         };
 
         console.log("Scanning Super Heroes table.");
-
-        docClient.scan(params, onScan);
-
-        function onScan(err, data) {
+        docClient.scan(params, function (err, data) {
+            console.log("On Scan function");
             if (err) {
                 console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
             } else {
@@ -39,20 +38,37 @@ var appRouter = function (app) {
                     docClient.scan(params, onScan);
                 }
             }
-        }
+        });
     });
 
-    app.get("/Heroes/:name", function (req, res) {
-        console.log(req.params.name);
+    app.post("/Heroes", function (req, res) {
+        console.log(req.body.id);
         var params = {
             TableName: tableName,
-            KeyConditionExpression: "#nm = :name",
-            ExpressionAttributeNames: { "#nm": "name" },
+            Item: {
+                "id": req.body.id,
+                "name": req.body.name,
+                "biography": req.body.biography,
+                "powers": req.body.powers
+            }
+        };
+        docClient.put(params, function (err, data) {
+            if (err) { console.log(err); }
+            else {
+                console.log(data);
+                res.send(data);
+            }
+        });
+    });
+
+    app.get("/Heroes/:id", function (req, res) {
+        console.log(req.params.id);
+        var params = {
+            TableName: tableName,
+            KeyConditionExpression: "id = :id",
             ExpressionAttributeValues: {
-                ":name": req.params.name
-            },
-            ProjectionExpression: "#nm, biography, powers"
-           
+                ":id": parseInt(req.params.id)
+            }
         };
 
         console.log("Scanning Super Heroes table.");
@@ -68,10 +84,62 @@ var appRouter = function (app) {
                 data.Items.forEach(function (hero) {
                     console.log(hero.id, hero.name)
                 });
-               
+
             }
         }
-    })
+    });
+    
+    app.put("/Heroes/:id", function (req, res) {
+        console.log(req.params.id);
+        var params = {
+            TableName: tableName,
+            Key: {
+                "id": parseInt(req.params.id)
+            },
+            UpdateExpression: "set #n= :nm, biography=:bio, powers=:pow",
+            ExpressionAttributeNames: {
+                "#n": "name"
+            },
+            ExpressionAttributeValues: {
+                ":nm": req.body.name,
+                ":bio": req.body.biography,
+                ":pow": req.body.powers
+            },
+            ReturnValues: "UPDATED_NEW"
+        };
+
+        console.log("Updating the item...");
+        docClient.update(params, function (err, data) {
+            if (err) {
+                console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+                
+            } else {
+                console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+                res.send(data);
+            }
+        });
+    });
+
+    app.delete("/Heroes/:id", function (req, res) {
+        var params = {
+            TableName: tableName,
+            Key: {
+                "id": parseInt(req.params.id)
+            },
+            ReturnValues: "ALL_OLD"
+        };
+
+        console.log("Attempting a conditional delete...");
+        docClient.delete(params, function (err, data) {
+            if (err) {
+                console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+            } else {
+                console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
+                
+            }
+            res.send(data);
+        });
+    });
 }
 
 module.exports = appRouter;
