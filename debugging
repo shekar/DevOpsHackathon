@@ -1,0 +1,114 @@
+Ubuntu used : 16.04
+Docker installation worked perfetly. To install docker, We need to use different repositories for differnt versions of Linux OS. 
+I have used Linux 16.04 from the same portal (osboxes) and the same docker installation worked.
+Install Jenkins as usual from Terminal
+and Use JenkinsFileUbuntu for pipeline on Jenkins.  JenkinsFileUbuntu - this file is added in the repository.
+Following is the error I arrived at after fixing resolving few issues. You can continue from here.
+
+Also, can you please ask Akshay to look into these version mismatches in the following console output.
+
+
+Console output from Jenkins last build.
+
+
+Started by user Shekar Gurram
+Checking out git https://github.com/shekar/DevOpsHackathon into /var/lib/jenkins/workspace/TestDocker@script to read JenkinsFileUbuntu
+using credential 5e316730-89e6-4907-a5bb-dd24888df5f1
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/shekar/DevOpsHackathon # timeout=10
+Fetching upstream changes from https://github.com/shekar/DevOpsHackathon
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress https://github.com/shekar/DevOpsHackathon +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision e8e63b6c083ef2ea9636b711b6114222cb9de01d (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f e8e63b6c083ef2ea9636b711b6114222cb9de01d
+Commit message: "Adding env as HOME to fix .npm dir access issue"
+ > git rev-list --no-walk c92351e8898bc8f0b67f86b7401e36788668fe32 # timeout=10
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/TestDocker
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+using credential 5e316730-89e6-4907-a5bb-dd24888df5f1
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/shekar/DevOpsHackathon # timeout=10
+Fetching upstream changes from https://github.com/shekar/DevOpsHackathon
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress https://github.com/shekar/DevOpsHackathon +refs/heads/*:refs/remotes/origin/*
+
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision e8e63b6c083ef2ea9636b711b6114222cb9de01d (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+
+ > git checkout -f e8e63b6c083ef2ea9636b711b6114222cb9de01d
+
+Commit message: "Adding env as HOME to fix .npm dir access issue"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
+
++ docker inspect -f . node:8-alpine
+.
+[Pipeline] withDockerContainer
+Jenkins does not seem to be running inside a container
+$ docker run -t -d -u 121:129 -p 3000:3000 -v /.cache/ -v /.bower/ -v /.config/configstore/ -w /var/lib/jenkins/workspace/TestDocker -v /var/lib/jenkins/workspace/TestDocker:/var/lib/jenkins/workspace/TestDocker:rw,z -v /var/lib/jenkins/workspace/TestDocker@tmp:/var/lib/jenkins/workspace/TestDocker@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:8-alpine cat
+
+$ docker top 586e4e3d25d8c385e6ce69d678fe6bdd4712183f785b910052f13fcf052b6770 -eo pid,comm
+
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
+
++ npm install
+
+npm WARN deprecated core-js@1.2.7: core-js@<2.6.5 is no longer maintained. Please, upgrade to core-js@3 or at least to actual version of core-js@2.
+
+npm WARN deprecated flatten@1.0.2: I wrote this module a very long time ago; you should use something else.
+
+npm ERR! code ETARGET
+npm ERR! notarget No matching version found for express@6.9.0
+npm ERR! notarget In most cases you or one of your dependencies are requesting
+npm ERR! notarget a package version that doesn't exist.
+npm ERR! notarget 
+npm ERR! notarget It was specified as a dependency of 'superheroes'
+npm ERR! notarget 
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /var/lib/jenkins/workspace/TestDocker/.npm/_logs/2019-05-04T23_53_55_323Z-debug.log
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+Stage "Test" skipped due to earlier failure(s)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+$ docker stop --time=1 586e4e3d25d8c385e6ce69d678fe6bdd4712183f785b910052f13fcf052b6770
+
+$ docker rm -f 586e4e3d25d8c385e6ce69d678fe6bdd4712183f785b910052f13fcf052b6770
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
