@@ -8,7 +8,7 @@ chai.should();
 describe("Heroes", () => {
     describe("GET /", () => {
         it("should get all the heroes record", (done) => {
-            request('http://localhost:3000', function (error, response, body) {
+            request('http://localhost:5000/Heroes', function (error, response, body) {
                 chai.expect(response.statusCode).to.equal(200);
                 done();
             });
