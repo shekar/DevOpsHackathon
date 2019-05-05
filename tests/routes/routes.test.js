@@ -1,22 +1,25 @@
-const expect = require('chai').expect;
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var request = require('request');
 
-const { getHeroes } = require('../../routes/readTable');
-
-let req = {
-    body: {},
-};
-
-let res = {
-    sendCalledWith: '',
-    send: function (arg) {
-        this.sendCalledWith = arg;
-    }
-}
+chai.use(chaiHttp);
+chai.should();
 describe("Routes ", function () {
-    it("should error out", function () {
-        getHeroes(req, res);
-        console.log('testing');
-        console.log(res.sendCalledWith);
-        expect(res.sendCalledWith).to.contain("Items");
+    describe("GET /", () => {
+        it("should get all the heroes record", (done) => {
+            request('http://localhost:5000/Heroes', function (error, response, body) {
+                chai.expect(response.statusCode).to.equal(200);
+                done();
+            });
+
+        });
+        it("should get a hero record", (done) => {
+            request('http://localhost:5000/Heroes/1', function (error, response, body) {
+                chai.expect(response.statusCode).to.equal(200);
+                done();
+            });
+
+        });
     });
+   
 })
